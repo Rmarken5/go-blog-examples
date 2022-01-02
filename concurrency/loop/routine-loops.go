@@ -3,24 +3,20 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"sync"
 	"time"
 )
 
-func printLine(inx int, wg *sync.WaitGroup) {
-	defer wg.Done()
+func printLine(inx int) {
 	x := int(rand.Float32() * 10)
 	time.Sleep(time.Duration(x) * time.Second)
 	fmt.Printf("Index: %d\n", inx)
-
 }
 
 func main() {
-	wg := sync.WaitGroup{}
+	var s string
 	for i := 1; i <= 10; i++ {
-		wg.Add(1)
-		go printLine(i, &wg)
+		go printLine(i)
 	}
-	wg.Wait()
+	fmt.Scanln(&s)
 	fmt.Printf("Done")
 }
